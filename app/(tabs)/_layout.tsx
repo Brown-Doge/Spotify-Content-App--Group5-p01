@@ -1,5 +1,5 @@
-import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { Tabs } from 'expo-router';
 
 export default function Layout() {
   return (
@@ -28,6 +28,15 @@ export default function Layout() {
           title: 'Login',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="log-in" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="testDB"
+        options={{
+          title: 'test',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="star" color={color} size={size} />
           ),
         }}
       />
