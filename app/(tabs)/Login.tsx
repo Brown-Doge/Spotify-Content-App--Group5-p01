@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+
+  const checkUser = async () => {
+    if (username.length === 0 || password.length === 0) {
+      alert('Please enter both username and password.');
+      return;
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -21,6 +29,10 @@ export default function Login() {
         onChangeText={setPassword}
         secureTextEntry
       />
+      <Button title="Login" onPress={checkUser}/>
+      <View style={{ height: 16 }} />
+      <Button title="Sign Up" onPress={() => {}} />
+
     </View>
   );
 }
