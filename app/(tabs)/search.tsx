@@ -10,7 +10,7 @@ export default function Search() {
  
  
   //AS OF NOW TO MAKE IT SIMPLE, TAKE OUT THE KEY BEFORE PUSHING CODE ON GITHUB
-  const API_KEY = ""; 
+  const API_KEY = "cle"; 
 
 
   // function that implements the api and calls the search movies using TMDB documentation
