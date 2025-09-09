@@ -1,7 +1,10 @@
 import * as SQLite from "expo-sqlite";
 
+// initialize the database and create tables if they don't exist 
 const dbPromise = (async () => {
+    // open the database
     const db = await SQLite.openDatabaseAsync("app.db");
+    // create tables if they don't exist
     await db.execAsync(`
         // to enable foreign key constraints
 
@@ -20,6 +23,7 @@ const dbPromise = (async () => {
     return db;
 })();
 
+// function to get the database instance
 export async function getDatabase() {
     return dbPromise;
 }
