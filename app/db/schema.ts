@@ -1,13 +1,12 @@
 import * as SQLite from "expo-sqlite";
 
-// this is in charge of "opening the db"
-export async function openDatabase() {
-  return await SQLite.openDatabaseAsync("app.db");
-}
-// this is in charge of creating the tables 
-export async function setUpDataBase(){
-    const db = await openDatabase();
+const dbPromise = (async () => {
+    const db = await SQLite.openDatabaseAsync("app.db");
     await db.execAsync(`
+        // to enable foreign key constraints
+
+        PRAGMA foreign_keys = ON;
+
         CREATE TABLE IF NOT EXISTS users (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
             first_name TEXT NOT NULL,
@@ -17,6 +16,10 @@ export async function setUpDataBase(){
             password TEXT NOT NULL
         );
     `);
-
+    // other tables can be created here
     return db;
+})();
+
+export async function getDatabase() {
+    return dbPromise;
 }
