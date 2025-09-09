@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import { openDatabase } from './schema';
+import { getDatabase } from './schema';
 
 async function getDb() {
-  const db = await openDatabase();
+  const db = await getDatabase();
   return db;
 }
 
