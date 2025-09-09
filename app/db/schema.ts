@@ -5,11 +5,10 @@ const dbPromise = (async () => {
     // open the database
     const db = await SQLite.openDatabaseAsync("app.db");
     // create tables if they don't exist
+    // PRAGMA foreign_keys to enable foreign key constraints
     await db.execAsync(`
-        // to enable foreign key constraints
-
         PRAGMA foreign_keys = ON;
-
+        
         CREATE TABLE IF NOT EXISTS users (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
             first_name TEXT NOT NULL,
