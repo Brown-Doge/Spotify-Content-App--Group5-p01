@@ -9,7 +9,7 @@ export default function RootLayout() {
         // this should appear if everything was loaded up correctly
         console.log("Local Database is ready");
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.error("Failed to initialize database:", error);
         // You might want to show a user-friendly error message here
       });
