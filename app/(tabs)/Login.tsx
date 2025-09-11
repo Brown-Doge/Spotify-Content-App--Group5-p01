@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 
+
 WebBrowser.maybeCompleteAuthSession();
 
 
@@ -61,10 +62,10 @@ export default function Login() {
       <Button title="Login" onPress={checkUser}/>
       <View style={{ height: 16 }} />
       <Button title="Sign Up" onPress={() => {}} />
-
+      <View style={{ height: 16 }} />
       <Button
       disabled={!request}
-      title="Login"
+      title="github"
       onPress={() => {
         promptAsync();
       }}
