@@ -1,5 +1,6 @@
 import * as SQLite from "expo-sqlite";
 
+
 // A variable to hold the database instance.
 // Using 'any' for simplicity, but you can create a proper type for the opened database.
 let db: any = null;
@@ -38,9 +39,9 @@ export async function initializeDatabase() {
                 director TEXT,
                 release_date TEXT,
                 poster_path TEXT,
-                overview TEXT
+                overview TEXT,
                 runtime INTEGER,
-                vote_average REAL,
+                vote_average REAL
             );
 
             -- store all possible genres
