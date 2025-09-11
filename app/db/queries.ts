@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import { openDatabase } from './schema';
+import { getDatabase } from './schema';
 
 async function getDb() {
-  const db = await openDatabase();
+  const db = await getDatabase();
   return db;
 }
 
@@ -46,7 +46,7 @@ export async function getUserById(userId: number) {
 export async function verifyLogin(identifier: string, password: string) {
     const db = await getDb();
     // will find a user with either username or email
-    const user = await db.getFirstAsync<UserRow>(`SELECT * FROM users WHERE username = ? OR email = ?`, [identifier, identifier]);
+    const user = await db.getFirstAsync(`SELECT * FROM users WHERE username = ? OR email = ?`, [identifier, identifier]);
     if (!user) {
         console.log("User not found");
         return null;
