@@ -1,0 +1,1 @@
+export const getDatabase = jest.fn();
