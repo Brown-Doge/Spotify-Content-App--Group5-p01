@@ -1,18 +1,37 @@
-import React, { useState } from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { Link, useRouter } from 'expo-router';
+import { useState } from 'react';
+import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { addUser } from '../db/queries';
 
-export default function Login() {
+export default function SignUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [loading, setLoading ] = useState(false);
+  const router = useRouter();
 
-  const checkUser1 = async () => {
+  const checkSignup = async () => {
     if (username.length === 0 || password.length === 0 || email.length === 0) {
-      alert('Please enter username, email, and password.');
+      Alert.alert('Please enter username, email, and password.');
       return;
     }
+  
+  try{
+    setLoading(true);
+    await addUser(firstName, lastName, username, email, password);
+    setLoading(false);
+    Alert.alert('Registration Successful', 'You have been registered successfully.');
+    router.push({pathname: '/login'});
+  }catch (error) {
+    setLoading(false);
+    if (error instanceof Error && error.message.includes('UNIQUE constraint failed: users.username')) {
+      Alert.alert('Registration Failed', 'Username already exists. Please choose a different username.');
+    }
+  }
+}
 
- }
     return (
       <View style={styles.container}>
         <TextInput
@@ -33,14 +52,32 @@ export default function Login() {
             style={styles.input}
             placeholder="Email"
             value={email}
+            keyboardType='email-address'
             onChangeText={setEmail}
-            secureTextEntry
             />
-        <Button title="Sign Up" onPress={checkUser1}/>
-      </View>
+        <TextInput
+            style={styles.input}
+            placeholder="First Name"
+            value={firstName}
+            onChangeText={setFirstName}
+            />
+        <TextInput
+            style={styles.input}
+            placeholder="Last Name"
+            value={lastName}
+            onChangeText={setLastName}
+            />
+          {loading ? <Text>Registering...</Text> : null}
 
+        <Button title="Sign Up" onPress={checkSignup}/>
+        <Link href="/login">
+        <Text>Back to Login</Text>
+      </Link>
+      </View>
+      
     );
   }
+  
   const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -59,5 +96,7 @@ export default function Login() {
     fontSize: 16,
     backgroundColor: '#fff',
   },
+  
+  
 });
   
