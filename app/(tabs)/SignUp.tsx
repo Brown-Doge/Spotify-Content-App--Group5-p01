@@ -29,6 +29,9 @@ export default function SignUp() {
     if (error instanceof Error && error.message.includes('UNIQUE constraint failed: users.username')) {
       Alert.alert('Registration Failed', 'Username already exists. Please choose a different username.');
     }
+    else{
+      Alert.alert('Registration Failed', 'An error occurred during registration. Please try again.');
+    }
   }
 }
 
