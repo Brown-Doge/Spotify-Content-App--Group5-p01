@@ -39,5 +39,8 @@
     "experiments": {
       "typedRoutes": true
     }
-  }
+  },
+  "extra": {
+    "apiKey": "YOUR_REAL_API_KEY_HERE"
+    }
 }

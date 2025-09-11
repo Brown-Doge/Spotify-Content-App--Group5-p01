@@ -1,6 +1,19 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { useEffect } from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 
+
+WebBrowser.maybeCompleteAuthSession();
+
+
+// Endpoint
+const discovery = {
+  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+  tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint: 'https://github.com/settings/connections/applications/<CLIENT_ID>',
+};
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -12,6 +25,23 @@ export default function Login() {
       return;
     }
   }
+
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      clientId: 'CLIENT_ID',
+      scopes: ['identity'],
+      redirectUri: makeRedirectUri({
+        scheme: 'your.app'
+      }),
+    },
+    discovery
+  );
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { code } = response.params;
+    }
+  }, [response]);
 
   return (
     <View style={styles.container}>
@@ -32,6 +62,14 @@ export default function Login() {
       <Button title="Login" onPress={checkUser}/>
       <View style={{ height: 16 }} />
       <Button title="Sign Up" onPress={() => {}} />
+      <View style={{ height: 16 }} />
+      <Button
+      disabled={!request}
+      title="github"
+      onPress={() => {
+        promptAsync();
+      }}
+    />
 
     </View>
   );
