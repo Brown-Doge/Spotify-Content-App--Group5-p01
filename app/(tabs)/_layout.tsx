@@ -32,15 +32,7 @@ export default function Layout() {
     }}
   />
 
-  <Tabs.Screen
-    name="testDB"
-    options={{
-      title: 'test',
-      tabBarIcon: ({ color, size }) => (
-        <Ionicons name="star" color={color} size={size} />
-      ),
-    }}
-  />
+
 </Tabs>
     
     
