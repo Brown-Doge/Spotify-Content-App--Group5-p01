@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { useEffect } from "react";
-import { getDatabase } from "./db/schema";
+import { getDatabase } from "./(admin)/db/schema";
 
 export default function RootLayout() {
   useEffect(() => {

@@ -3,8 +3,8 @@
 jest.mock("bcryptjs");
 jest.mock("../app/db/schema");
 import bcrypt from 'bcryptjs';
-import { addUser, getUserById, verifyLogin } from '../app/db/queries';
-import { getDatabase } from '../app/db/schema';
+import { addUser, getUserById, verifyLogin } from '../app/(admin)/db/queries';
+import { getDatabase } from '../app/(admin)/db/schema';
 
 const mockedGetDatabase = getDatabase as jest.MockedFunction<typeof getDatabase>;
 const mockedBcrypt = bcrypt as jest.Mocked<typeof bcrypt>;
