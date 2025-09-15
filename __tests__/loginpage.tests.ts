@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
-import Login from "../app/(tabs)/Login";
+import Login from "../app/(public)/login";
 
 jest.mock("expo-web-browser", () => ({ maybeCompleteAuthSession: jest.fn() }));
 
