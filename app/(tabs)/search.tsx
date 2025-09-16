@@ -6,20 +6,19 @@ export default function Search() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<any | null>(null);
   const [query, setQuery] = useState("");
+  // Getting the API key from the .env file if null set to empty string
+  const apiKey = process.env.EXPO_PUBLIC_TMDB_API_KEY ?? "";
 
   // Empty movies array at first but then setMovies replaces it with data results 
   const [movies, setMovies] = useState<any[]>([]);
- 
- 
-  //AS OF NOW TO MAKE IT SIMPLE, TAKE OUT THE KEY BEFORE PUSHING CODE ON GITHUB
-  const API_KEY = "cle"; 
 
 
   // function that implements the api and calls the search movies using TMDB documentation
   async function searchMovies() {
     try {
       const response = await fetch(
-        "https://api.themoviedb.org/3/search/movie?api_key=" + API_KEY + "&query="+encodeURIComponent(query));
+      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(query)}`
+    );
       const data = await response.json();
       console.log("TMDB:", data);
       if (data) {
