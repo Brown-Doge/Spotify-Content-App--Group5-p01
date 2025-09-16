@@ -14,7 +14,7 @@ export default function Layout() {
         }}
       />      
       <Tabs.Screen
-        name="top-user-picks"
+        name="login"
         options={{
           title: 'Top User Picks',
           tabBarIcon: ({ color, size }) => (
@@ -23,14 +23,14 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-    name="search"
-    options={{
-      title: 'Search',
-      tabBarIcon: ({ color, size }) => (
-        <Ionicons name="search" color={color} size={size} />
-      ),
-    }}
-  />
+        name="top-user-picks"
+        options={{
+          title: 'Top Picks',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="star" color={color} size={size} />
+          ),
+        }}
+      />
 
 
 </Tabs>

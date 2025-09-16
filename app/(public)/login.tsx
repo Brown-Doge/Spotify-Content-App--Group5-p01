@@ -31,7 +31,7 @@ export default function Login() {
       clientId: 'CLIENT_ID',
       scopes: ['identity'],
       redirectUri: makeRedirectUri({
-        scheme: 'your.app'
+        scheme: 'mymovieapp',
       }),
     },
     discovery
@@ -63,10 +63,11 @@ export default function Login() {
       <View style={{ height: 16 }} />
       <Button title="Sign Up" onPress={() => {}} />
       <View style={{ height: 16 }} />
+      
       <Button
-      disabled={!request}
-      title="github"
-      onPress={() => {
+        disabled={!request}
+        title="github"
+        onPress={() => {
         promptAsync();
       }}
     />
