@@ -8,21 +8,19 @@ WebBrowser.maybeCompleteAuthSession();
 const discovery = {
   authorizationEndpoint: 'https://github.com/login/oauth/authorize',
   tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint: '', // GitHub does not provide a revocation endpoint
 };
 
 export default function GhubAuth() {
-  // Use the Expo proxy in Expo Go; set to false if using a dev client/standalone
-  const useProxy = true;
+  const useProxy = true; // Set to false if using a dev client/standalone
 
   const [request, response, promptAsync] = useAuthRequest(
     {
-      clientId: '<YOUR_CLIENT_ID>',
-      // Optional but common scope for user identity
+      clientId: 'Ov23liStAcDficiTmWmY',
       scopes: ['read:user', 'user:email'],
       redirectUri: makeRedirectUri({
         scheme: 'mymovieapp',
         path: 'redirect',
-        useProxy, // critical for Expo Go
       }),
     },
     discovery
@@ -31,8 +29,7 @@ export default function GhubAuth() {
   useEffect(() => {
     if (response?.type === 'success') {
       const { code } = response.params as { code: string };
-      // Send `code` to YOUR backend to exchange for an access token.
-      // e.g. await fetch('https://your.api/oauth/github', { method: 'POST', body: JSON.stringify({ code }) })
+      // Send `code` to your backend to exchange for an access token.
       Alert.alert('GitHub Code Received', code);
     } else if (response?.type === 'error') {
       Alert.alert('Auth Error', JSON.stringify(response.params ?? {}));
@@ -44,7 +41,7 @@ export default function GhubAuth() {
       <Button
         disabled={!request}
         title="Login with GitHub"
-        onPress={() => promptAsync({ useProxy })}
+        onPress={() => promptAsync()}
       />
     </View>
   );

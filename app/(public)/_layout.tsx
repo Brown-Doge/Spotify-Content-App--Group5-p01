@@ -12,13 +12,13 @@ export default function Layout() {
             <Ionicons name="home" color={color} size={size} />
           ),
         }}
-      />      
+      />
       <Tabs.Screen
         name="login"
         options={{
-          title: 'Top User Picks',
+          title: 'Login',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="star" color={color} size={size} />
+            <Ionicons name="log-in" color={color} size={size} />
           ),
         }}
       />
@@ -31,10 +31,6 @@ export default function Layout() {
           ),
         }}
       />
-
-
-</Tabs>
-    
-    
+    </Tabs>
   );
 }
