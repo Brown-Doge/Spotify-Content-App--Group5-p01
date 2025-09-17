@@ -93,7 +93,7 @@ export async function initializeDatabase() {
 }
 
 // This function provides a safe way to get the database instance.
-export function getDatabase() {
+export function getDatabaseInstance() {
     if (!db) {
         // This indicates that initializeDatabase was never called, which is a programming error.
         throw new Error("The database has not been initialized. Please call initializeDatabase() first.");
