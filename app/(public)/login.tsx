@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, TextInput, View, Text } from 'react-native';
+import { Button, StyleSheet, TextInput, View, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
@@ -28,8 +28,8 @@ export default function Login() {
 
   const [request, response, promptAsync] = useAuthRequest(
     {
-      clientId: 'CLIENT_ID',
-      scopes: ['identity'],
+      clientId: 'Ov23liStAcDficiTmWmY', // <-- your real client ID
+      scopes: ['read:user', 'user:email'],
       redirectUri: makeRedirectUri({
         scheme: 'mymovieapp',
       }),

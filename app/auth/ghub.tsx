@@ -36,6 +36,10 @@ export default function GhubAuth() {
     }
   }, [response]);
 
+  useEffect(() => {
+    Alert.alert('Redirect URI', makeRedirectUri({ scheme: 'mymovieapp', path: 'redirect' }));
+  }, []);
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Button
