@@ -1,12 +1,12 @@
 // making sure jest replaces db things with a mock
 
 jest.mock("bcryptjs");
-jest.mock("../app/db/schema");
+jest.mock("../app/db/db");
 import bcrypt from 'bcryptjs';
+import { getDb } from '../app/db/db';
 import { addUser, getUserById, verifyLogin } from '../app/db/queries';
-import { getDatabase } from '../app/db/schema';
 
-const mockedGetDatabase = getDatabase as jest.MockedFunction<typeof getDatabase>;
+const mockedGetDatabase = getDb as jest.MockedFunction<typeof getDb>;
 const mockedBcrypt = bcrypt as jest.Mocked<typeof bcrypt>;
 
 describe('Database Query Functions TEsts', () => {
