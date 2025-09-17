@@ -31,6 +31,15 @@ export default function Layout() {
           ),
         }}
       />
+       <Tabs.Screen
+        name="favorites"
+        options={{
+          title: 'favorites',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="star" color={color} size={size} />
+          ),
+        }}
+      />
 
       <Tabs.Screen
         name="testDB"
