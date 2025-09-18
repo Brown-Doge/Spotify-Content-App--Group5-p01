@@ -10,7 +10,7 @@ jest.mock("expo-auth-session", () => {
   return {
     ...actual,
     useAuthRequest: (...args: any[]) => mockUseAuthRequest(...args),
-    makeRedirectUri: actual.makeRedirectUri,
+    makeRedirectUri: jest.fn(() => "http://localhost:8081"), // <-- mock it!
   };
 });
 
@@ -18,16 +18,16 @@ describe("Login page - GitHub button", () => {
   it("is disabled when request is not ready", () => {
     mockUseAuthRequest.mockReturnValue([null, null, jest.fn()]);
 
-    const { getByText } = render(React.createElement(Login, null)); // no JSX
-    expect(getByText("github")).toBeDisabled();
+    const { getByText } = render(React.createElement(Login, null));
+    expect(getByText("Sign in with GitHub")).toBeDisabled();
   });
 
   it("clicks GitHub button and triggers promptAsync", () => {
     const promptAsync = jest.fn();
     mockUseAuthRequest.mockReturnValue([{}, null, promptAsync]);
 
-    const { getByText } = render(React.createElement(Login, null)); // no JSX
-    const btn = getByText("github");
+    const { getByText } = render(React.createElement(Login, null));
+    const btn = getByText("Sign in with GitHub");
 
     expect(btn).not.toBeDisabled();
     fireEvent.press(btn);
