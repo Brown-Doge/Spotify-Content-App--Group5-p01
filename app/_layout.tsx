@@ -52,7 +52,7 @@ export default function RootLayout() {
   //once db is initialized, show the app
   return (
     <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="(public)" options={{ headerShown: false }} />
     </Stack>
   );
 }
