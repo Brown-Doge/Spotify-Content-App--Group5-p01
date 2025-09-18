@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { addUser } from '../db/queries';
 
-export default function Signup() {
+export default function SignUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,64 +16,63 @@ export default function Signup() {
       alert('Please enter username, email, and password.');
       return;
     }
-  
-    if(password.length < 6) {
-    alert('Password must be at least 6 characters long.');
-    return;
-  }
-    
-      try{
-        await addUser(username, email, password, firstName, lastName);
-        alert('Sign-up successful! You can now log in.');
-        router.push({ pathname: '/Login' });
-      } catch (error) {
-        console.error('Error during sign-up:', error);
-        alert('Sign-up failed. Please try again.');
 
-      }
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters long.');
+      return;
     }
-    return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-        <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            />
-        <TextInput
-            style={styles.input}
-            placeholder="First Name"
-            value={firstName}
-            onChangeText={setFirstName}
-            />
-        <TextInput
 
-            style={styles.input}
-            placeholder="Last Name"
-            value={lastName}
-            onChangeText={setLastName}
-            />
-        <View style={{ height: 16 }} />
-        <Button title="Sign Up" onPress={checkUser1}/>
-      </View>
-
-    );
+    try {
+      await addUser(firstName, lastName, username, email, password);
+      alert('Sign-up successful! You can now log in.');
+      router.push('/(tabs)/Login');
+    } catch (error) {
+      console.error('Error during sign-up:', error);
+      alert('Sign-up failed. Please try again.');
+    }
   }
-  const styles = StyleSheet.create({
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="First Name"
+        value={firstName}
+        onChangeText={setFirstName}
+      />
+      <TextInput
+
+        style={styles.input}
+        placeholder="Last Name"
+        value={lastName}
+        onChangeText={setLastName}
+      />
+      <View style={{ height: 16 }} />
+      <Button title="Sign Up" onPress={checkUser1} />
+    </View>
+
+  );
+}
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
