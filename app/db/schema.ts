@@ -1,5 +1,6 @@
 import * as SQLite from "expo-sqlite";
 
+
 // A variable to hold the database instance.
 // Using 'any' for simplicity, but you can create a proper type for the opened database.
 let db: any = null;
@@ -38,9 +39,9 @@ export async function initializeDatabase() {
                 director TEXT,
                 release_date TEXT,
                 poster_path TEXT,
-                overview TEXT
+                overview TEXT,
                 runtime INTEGER,
-                vote_average REAL,
+                vote_average REAL
             );
 
             -- store all possible genres
@@ -92,7 +93,7 @@ export async function initializeDatabase() {
 }
 
 // This function provides a safe way to get the database instance.
-export function getDatabase() {
+export function getDatabaseInstance() {
     if (!db) {
         // This indicates that initializeDatabase was never called, which is a programming error.
         throw new Error("The database has not been initialized. Please call initializeDatabase() first.");

@@ -12,7 +12,7 @@ export default function Layout() {
             <Ionicons name="home" color={color} size={size} />
           ),
         }}
-      />      
+      />
       <Tabs.Screen
         name="top-user-picks"
         options={{

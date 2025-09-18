@@ -1,25 +1,30 @@
 import React, { useState } from "react";
-import { Button, FlatList, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, } from "react-native";
+import { Alert, Button, FlatList, Image, Modal, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+// Update the import path below if the actual path is different
+import { getCurrentUserId } from "../db/auth";
+import { setFavorite } from "../db/favorites";
+
 
 export default function Search() {
 
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<any | null>(null);
   const [query, setQuery] = useState("");
+  const [isFav, setIsFav] = useState(false);
+  // Getting the API key from the .env file if null set to empty string
+  const apiKey = process.env.EXPO_PUBLIC_TMDB_API_KEY ?? "";
 
   // Empty movies array at first but then setMovies replaces it with data results 
   const [movies, setMovies] = useState<any[]>([]);
- 
- 
-  //AS OF NOW TO MAKE IT SIMPLE, TAKE OUT THE KEY BEFORE PUSHING CODE ON GITHUB
-  const API_KEY = "cle"; 
 
 
   // function that implements the api and calls the search movies using TMDB documentation
   async function searchMovies() {
     try {
       const response = await fetch(
-        "https://api.themoviedb.org/3/search/movie?api_key=" + API_KEY + "&query="+encodeURIComponent(query));
+      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(query)}`
+    );
       const data = await response.json();
       console.log("TMDB:", data);
       if (data) {
@@ -32,6 +37,14 @@ export default function Search() {
       console.error("Error fetching movies:", error);
     }
   }
+  // Alerts user if not logged in
+  const showLoginAlert = () => {
+    if (Platform.OS === "web") {
+      window.alert("Please log in first");
+    } else {
+      Alert.alert("Please log in first");
+    }
+  };
   
 return (
   // Search bar 
@@ -83,36 +96,55 @@ return (
        />
        
        <Modal
-      //  Setting up Modal whenever user clicks on movie title, this will pop up
-        transparent
-        visible={modalVisible}
-        animationType="fade"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalCard}>
-            {selectedMovie && (
-              <>
-                {selectedMovie.poster_path ? (
-                  <Image
-                    source={{ uri:"https://image.tmdb.org/t/p/w154" + selectedMovie.poster_path,}}
-                    style={styles.modalPoster}
-                  />
-                ) : null}
+  transparent
+  visible={modalVisible}
+  animationType="fade"
+  onRequestClose={() => setModalVisible(false)}
+>
+  <View style={styles.modalBackdrop}>
+    <View style={styles.modalCard}>
+      {selectedMovie && (
+        <>
+          {selectedMovie.poster_path ? (
+            <Image
+              source={{ uri: "https://image.tmdb.org/t/p/w154" + selectedMovie.poster_path }}
+              style={styles.modalPoster}
+            />
+          ) : null}
 
-                <Text style={styles.modalTitle}>{selectedMovie.title}</Text>
+          <Text style={styles.modalTitle}>{selectedMovie.title}</Text>
 
-                <Text style={styles.modalOverview}>
-                  {selectedMovie.overview || "No overview available."}
-                </Text>
-                <Button title = "Add to Favorites ★ " ></Button>
+          <Text style={styles.modalOverview}>
+            {selectedMovie.overview || "No overview available."}
+          </Text>
 
-                <Button title="Close" onPress={() => setModalVisible(false)} />
-              </>
-            )}
-          </View>
-        </View>
-      </Modal>
+          <Button
+  title={isFav ? "Remove Favorite" : "Add to Favorites ★"}
+  onPress={async () => {
+    if (!selectedMovie) return;
+    try {
+      getCurrentUserId(); // throws if not logged in
+    } catch {
+      showLoginAlert();   //Alert
+      return;
+    }
+    await setFavorite(
+      { movie_id: selectedMovie.id, title: selectedMovie.title, poster_path: selectedMovie.poster_path ?? null },
+      !isFav
+    );
+    setIsFav(!isFav);
+  }}
+/>
+
+
+          <View style={{ height: 8 }} />
+          <Button title="Close" onPress={() => setModalVisible(false)} />
+        </>
+      )}
+    </View>
+  </View>
+</Modal>
+
     </View>
   );
 }
@@ -131,8 +163,8 @@ const styles = StyleSheet.create({
   item: { paddingVertical: 6, fontSize: 13 },
   movieRow: {flexDirection: "row", alignItems: "center", paddingVertical: 6},
   poster: {width: 50, height: 75, borderRadius: 4, marginRight: 10},
-  posterUnknown: {width: 50, height: 75, borderRadius: 4, marginRight: 10, backgroundColor: "000"},
-  lineBreak: { height: 1, backgroundColor: "000" },
+  posterUnknown: {width: 50, height: 75, borderRadius: 4, marginRight: 10, backgroundColor: "#000"},
+  lineBreak: { height: 1, backgroundColor: "#000" },
   
   // Modal Styles
   modalBackdrop: {
