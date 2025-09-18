@@ -1,6 +1,14 @@
 import bcrypt from 'bcryptjs';
 import { getDb } from "./db";
 
+bcrypt.setRandomFallback((len: number) => {
+  const array: number[] = [];
+  for (let i = 0; i < len; i++) {
+    array.push(Math.floor(Math.random() * 256));
+  }
+  return array;
+});
+
 // User row type definition
 type UserRow = {
   user_id: number;
