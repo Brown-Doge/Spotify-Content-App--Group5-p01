@@ -14,44 +14,23 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
+        name="login"
+        options={{
+          title: 'Login',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="log-in" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="top-user-picks"
         options={{
-          title: 'Top User Picks',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="star" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="search"
-        options={{
-          title: 'Search',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="search" color={color} size={size} />
-          ),
-        }}
-      />
-       <Tabs.Screen
-        name="favorites"
-        options={{
-          title: 'favorites',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="star" color={color} size={size} />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="testDB"
-        options={{
-          title: 'test',
+          title: 'Top Picks',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="star" color={color} size={size} />
           ),
         }}
       />
     </Tabs>
-
-
   );
 }

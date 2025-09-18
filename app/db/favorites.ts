@@ -1,5 +1,5 @@
 import { getCurrentUserId } from "./auth";
-import { getDatabase } from "./schema";
+import { getDb } from "./db";
 export type MovieBasic = {
   movie_id: number;
   title: string;
@@ -8,7 +8,7 @@ export type MovieBasic = {
 
 // inserting favorite movie into database 
 async function upsertMovie(m: MovieBasic) {
-  const db = getDatabase();
+  const db = await getDb();
   await db.runAsync(
     `INSERT OR IGNORE INTO movies (movie_id, title, poster_path)
      VALUES (?, ?, ?)`,
@@ -24,7 +24,7 @@ async function upsertMovie(m: MovieBasic) {
 
 
 export async function setFavorite(m: MovieBasic, isFav: boolean) {
-  const db = getDatabase();
+  const db = await getDb();
   const uid = getCurrentUserId(); 
 
   await upsertMovie(m);
@@ -42,7 +42,7 @@ export async function setFavorite(m: MovieBasic, isFav: boolean) {
 }
 
 export async function isFavorite(movieId: number): Promise<boolean> {
-  const db = getDatabase();
+  const db = await getDb();
   const uid = getCurrentUserId();
   const row = await db.getFirstAsync(
     `SELECT is_favorite FROM user_movies WHERE user_id = ? AND movie_id = ?`,
@@ -55,7 +55,7 @@ export async function isFavorite(movieId: number): Promise<boolean> {
 export async function getMyFavorites(): Promise<
   Array<{ movie_id: number; title: string; poster_path: string | null }>
 > {
-  const db = getDatabase();
+  const db = await getDb();
   const uid = getCurrentUserId();
   return (
     (await db.getAllAsync(

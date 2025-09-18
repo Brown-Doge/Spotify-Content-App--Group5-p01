@@ -1,11 +1,11 @@
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import React, { useState, useEffect } from 'react';
+import { Button, StyleSheet, TextInput, View, Text, Alert } from 'react-native';
+import { useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
-import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 
 
 WebBrowser.maybeCompleteAuthSession();
-
 
 // Endpoint
 const discovery = {
@@ -14,6 +14,7 @@ const discovery = {
   revocationEndpoint: 'https://github.com/settings/connections/applications/<CLIENT_ID>',
 };
 export default function Login() {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -27,10 +28,10 @@ export default function Login() {
 
   const [request, response, promptAsync] = useAuthRequest(
     {
-      clientId: 'CLIENT_ID',
-      scopes: ['identity'],
+      clientId: 'Ov23liStAcDficiTmWmY', // <-- your real client ID
+      scopes: ['read:user', 'user:email'],
       redirectUri: makeRedirectUri({
-        scheme: 'your.app'
+        scheme: 'mymovieapp',
       }),
     },
     discovery
@@ -44,6 +45,7 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
+      <Text>Login Page</Text>
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -60,12 +62,13 @@ export default function Login() {
       />
       <Button title="Login" onPress={checkUser}/>
       <View style={{ height: 16 }} />
-      <Button title="Sign Up" onPress={() => {}} />
+      <Button title="Sign Up" onPress={() => router.push('/(public)/signup')} />
       <View style={{ height: 16 }} />
+      
       <Button
-      disabled={!request}
-      title="github"
-      onPress={() => {
+        disabled={!request}
+        title="Sign in with GitHub"
+        onPress={() => {
         promptAsync();
       }}
     />
