@@ -1,18 +1,37 @@
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { addUser } from '../db/queries';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const router = useRouter();
 
   const checkUser1 = async () => {
-    if (username.length === 0 || password.length === 0 || email.length === 0) {
+    if (username.length === 0 || password.length === 0 || email.length === 0 || firstName.length === 0 || lastName.length === 0) {
       alert('Please enter username, email, and password.');
       return;
     }
+  
+    if(password.length < 6) {
+    alert('Password must be at least 6 characters long.');
+    return;
+  }
+    
+      try{
+        await addUser(username, email, password, firstName, lastName);
+        alert('Sign-up successful! You can now log in.');
+        router.push({ pathname: '/Login' });
+      } catch (error) {
+        console.error('Error during sign-up:', error);
+        alert('Sign-up failed. Please try again.');
 
- }
+      }
+    }
     return (
       <View style={styles.container}>
         <TextInput
@@ -34,8 +53,21 @@ export default function Login() {
             placeholder="Email"
             value={email}
             onChangeText={setEmail}
-            secureTextEntry
             />
+        <TextInput
+            style={styles.input}
+            placeholder="First Name"
+            value={firstName}
+            onChangeText={setFirstName}
+            />
+        <TextInput
+
+            style={styles.input}
+            placeholder="Last Name"
+            value={lastName}
+            onChangeText={setLastName}
+            />
+        <View style={{ height: 16 }} />
         <Button title="Sign Up" onPress={checkUser1}/>
       </View>
 
@@ -60,4 +92,3 @@ export default function Login() {
     backgroundColor: '#fff',
   },
 });
-  
