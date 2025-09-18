@@ -25,7 +25,7 @@ export default function SignUp() {
     try {
       await addUser(firstName, lastName, username, email, password);
       alert('Sign-up successful! You can now log in.');
-      router.push('/(tabs)/Login');
+      router.push('/(public)/login');
     } catch (error) {
       console.error('Error during sign-up:', error);
       alert('Sign-up failed. Please try again.');
