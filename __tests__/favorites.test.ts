@@ -1,39 +1,51 @@
-import { setFavorite } from "../app/db/favorites";
+// __tests__/favorites.test.ts
 
-//creating a mock Db
+
 const mockDb = {
-  runAsync: jest.fn<Promise<any>, [string, any[]]>()
+  runAsync: jest.fn<Promise<any>, [string, any[]]>(),
 };
 
-// connect to db and create user id from fake login
-jest.mock("../app/db/schema", () => ({ getDatabase: () => mockDb }));
-jest.mock("../app/db/auth", () => ({ getCurrentUserId: () => 123 })); 
+jest.mock("../app/db/schema", () => ({
+  __esModule: true,
+  getDatabaseInstance: jest.fn(() => mockDb),
+}));
+
+jest.mock("../app/db/auth", () => ({
+  __esModule: true,
+  getCurrentUserId: jest.fn(() => 123),
+}));
+
+// Import from favorites
+import { setFavorite } from "../app/db/favorites";
 
 beforeEach(() => {
   mockDb.runAsync.mockClear();
 });
 
-//What the test should be about
+// Test that a logged in user can save a movie, should pass
 test("logged-in user can favorite a movie", async () => {
   await setFavorite(
     { movie_id: 42, title: "The Dark Knight", poster_path: "/x.png" },
     true
   );
 
-  // Capture calls: 
+
   const calls = mockDb.runAsync.mock.calls.map(([sql, params]) => [String(sql), params]);
 
-  // should equal the following below:
   expect(calls).toEqual(
     expect.arrayContaining([
-      // upsertMovie: insert
-      [expect.stringMatching(/INSERT OR IGNORE INTO movies/i), [42, "The Dark Knight", "/x.png"]],
-      // upsertMovie: update with COALESCE
-      [expect.stringMatching(/UPDATE movies SET title = COALESCE/i), ["The Dark Knight", "/x.png", 42]],
-      // ensure user_movies row exists
-      [expect.stringMatching(/INSERT OR IGNORE INTO user_movies/i), [123, 42]],
-      // mark as favorite
-      [expect.stringMatching(/UPDATE user_movies SET is_favorite = \?/i), [1, 123, 42]],
+      // INSERT OR IGNORE into movies (be flexible on whitespace/columns)
+      [expect.stringMatching(/INSERT\s+OR\s+IGNORE\s+INTO\s+movies/i), [42, "The Dark Knight", "/x.png"]],
+
+      // UPDATE movies SET title = COALESCE(...), poster_path = COALESCE(...), WHERE movie_id = ?
+      [expect.stringMatching(/UPDATE\s+movies\s+SET\s+title\s*=\s*COALESCE/i), ["The Dark Knight", "/x.png", 42]],
+
+      // Ensure user_movies exists
+      [expect.stringMatching(/INSERT\s+OR\s+IGNORE\s+INTO\s+user_movies/i), [123, 42]],
+
+      // Mark as favorite
+      [expect.stringMatching(/UPDATE\s+user_movies\s+SET\s+is_favorite\s*=\s*\?/i), [1, 123, 42]],
     ])
   );
 });
+
