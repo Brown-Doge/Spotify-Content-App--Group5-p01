@@ -3,16 +3,7 @@ import { Tabs } from 'expo-router';
 
 export default function Layout() {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" color={color} size={size} />
-          ),
-        }}
-      />
+    <Tabs screenOptions={{ headerShown: false }} initialRouteName="search">
       <Tabs.Screen
         name="top-user-picks"
         options={{

@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, TextInput, View, Text, Alert } from 'react-native';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import React, { useEffect, useState } from 'react';
+import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { setCurrentUserId } from '../db/auth';
+import { verifyLogin } from '../db/queries';
+import { initializeDatabase } from '../db/schema';
 
 
 WebBrowser.maybeCompleteAuthSession();
@@ -18,13 +21,38 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    (async () => {
+      try {
+        await initializeDatabase();
+      } catch (e) {
+        console.error(e);
+        Alert.alert('Database error', 'Could not initialize database.');
+      }
+    })();
+  }, []);
+
 
   const checkUser = async () => {
     if (username.length === 0 || password.length === 0) {
-      alert('Please enter both username and password.');
+      Alert.alert('Please enter both username and password.');
       return;
     }
-  }
+   
+    try {
+      const user = await verifyLogin(username.trim(), password);
+      if (user) {
+        setCurrentUserId(user.user_id);  
+        router.replace('/search'); 
+      } else {
+        Alert.alert('Login failed', 'Invalid username or password.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      Alert.alert('An error occurred during login. Please try again.');
+    }
+  }; 
+
 
   const [request, response, promptAsync] = useAuthRequest(
     {
