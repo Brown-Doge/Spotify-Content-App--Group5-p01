@@ -1,7 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
 import { FlatList, Image, RefreshControl, Text, View } from "react-native";
-import { getMyFavorites } from "../db/favorites";
+import { getMyFavorites } from "../../lib/db/favorites";
 
 export default function FavoritesTab() {
   const [rows, setRows] = useState<

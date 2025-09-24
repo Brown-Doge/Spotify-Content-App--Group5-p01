@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
-import { addUser } from '../db/queries';
+import { addUser } from '../../lib/db/queries';
 
 export default function SignUp() {
   const [username, setUsername] = useState('');

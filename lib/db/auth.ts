@@ -10,3 +10,4 @@ export function getCurrentUserId(): number {
   if (_uid == null) throw new Error("Not logged in");
   return _uid;
 }
+

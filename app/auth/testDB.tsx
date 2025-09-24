@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import { addUser, getAllUsers, verifyLogin } from "../db/queries";
+import { addUser, getAllUsers, verifyLogin } from '../../lib/db/queries';
 
 // simple format for testing database operations
 export default function TestDB() {

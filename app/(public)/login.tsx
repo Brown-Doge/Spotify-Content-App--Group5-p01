@@ -3,9 +3,10 @@ import { useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import { setCurrentUserId } from '../db/auth';
-import { verifyLogin } from '../db/queries';
-import { initializeDatabase } from '../db/schema';
+import { setCurrentUserId } from '../../lib/db/auth';
+import { verifyLogin } from '../../lib/db/queries';
+import { initializeDatabase } from '../../lib/db/schema';
+import { setFavorite } from '../../lib/db/favorites';
 
 
 WebBrowser.maybeCompleteAuthSession();

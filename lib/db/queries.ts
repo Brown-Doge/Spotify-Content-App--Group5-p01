@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { getDb } from "./db";
+import { getDb } from "../../lib/db/db";
 
 bcrypt.setRandomFallback((len: number) => {
   const array: number[] = [];
@@ -84,4 +84,37 @@ export async function verifyLogin(
   const { password: _omit, ...verifiedUser } = user;
   console.log('User verified:', verifiedUser);
   return verifiedUser as PublicUserRow;
+}
+
+// Add this function at the end of the file
+export async function getOrCreateUserByGithub(githubUser: any) {
+  const db = await getDb();
+  // Try to find user by GitHub ID (store github_id in your users table)
+  let user = await db.getFirstAsync(
+    `SELECT user_id, first_name, last_name, username, email FROM users WHERE github_id = ?`,
+    [githubUser.id]
+  );
+  if (user) {
+    return user;
+  }
+  // If not found, create a new user (customize as needed)
+  const username = githubUser.login || `github_${githubUser.id}`;
+  const email = githubUser.email || `${githubUser.id}@github.com`;
+  await db.runAsync(
+    `INSERT INTO users (first_name, last_name, username, email, github_id)
+     VALUES (?, ?, ?, ?, ?)`,
+    [
+      githubUser.name?.split(' ')[0] || '',
+      githubUser.name?.split(' ')[1] || '',
+      username,
+      email,
+      githubUser.id
+    ]
+  );
+  // Return the newly created user
+  user = await db.getFirstAsync(
+    `SELECT user_id, first_name, last_name, username, email FROM users WHERE github_id = ?`,
+    [githubUser.id]
+  );
+  return user;
 }

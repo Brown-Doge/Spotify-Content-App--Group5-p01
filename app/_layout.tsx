@@ -1,7 +1,7 @@
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import { initializeDatabase } from './db/schema';
+import { initializeDatabase } from '../lib/db/schema';
 
 // this keeps the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();

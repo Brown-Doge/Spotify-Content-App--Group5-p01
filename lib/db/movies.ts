@@ -1,4 +1,6 @@
-import { getDb } from "./db";
+import { getDb } from "../../lib/db/db";
+
+const apiKey = process.env.MOVIE_API_KEY;
 
 export type MovieRow = {
     // movie_id is the TMDB movie ID from API to ensure uniqueness

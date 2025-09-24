@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Alert, Button, FlatList, Image, Modal, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 // Update the import path below if the actual path is different
-import { getCurrentUserId } from "../db/auth";
-import { setFavorite } from "../db/favorites";
+import { getCurrentUserId } from '../../lib/db/auth';
+import { setFavorite } from '../../lib/db/favorites';
 
 
 export default function Search() {

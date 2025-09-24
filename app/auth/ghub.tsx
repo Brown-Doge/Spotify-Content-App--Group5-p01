@@ -18,10 +18,7 @@ export default function GhubAuth() {
     {
       clientId: 'Ov23liStAcDficiTmWmY',
       scopes: ['read:user', 'user:email'],
-      redirectUri: makeRedirectUri({
-        scheme: 'mymovieapp',
-        path: 'redirect',
-      }),
+      redirectUri: makeRedirectUri({ scheme: 'mymovieapp', path: 'redirect' }),
     },
     discovery
   );
@@ -29,16 +26,24 @@ export default function GhubAuth() {
   useEffect(() => {
     if (response?.type === 'success') {
       const { code } = response.params as { code: string };
-      // Send `code` to your backend to exchange for an access token.
-      Alert.alert('GitHub Code Received', code);
+      fetch('http://localhost:8081/api/auth/github', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      })
+        .then(res => res.json())
+        .then(data => {
+          // Save session/token as you do for normal login
+          // e.g., setCurrentUserId(data.userId)
+          Alert.alert('Login Success', `User ID: ${data.userId}`);
+        })
+        .catch(err => {
+          Alert.alert('Login Failed', err.message);
+        });
     } else if (response?.type === 'error') {
       Alert.alert('Auth Error', JSON.stringify(response.params ?? {}));
     }
   }, [response]);
-
-  useEffect(() => {
-    Alert.alert('Redirect URI', makeRedirectUri({ scheme: 'mymovieapp', path: 'redirect' }));
-  }, []);
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

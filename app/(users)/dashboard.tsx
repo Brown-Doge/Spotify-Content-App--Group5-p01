@@ -1,5 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import Constants from 'expo-constants';
+
+const apiKey = Constants.expoConfig?.extra?.movieApiKey;
 
 export default function Dashboard() {
   return (
@@ -89,3 +92,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+// Example usage in a fetch:
+// const response = await fetch(`https://api.themoviedb.org/3/movie/550?api_key=${apiKey}`);
+// ...handle response...
