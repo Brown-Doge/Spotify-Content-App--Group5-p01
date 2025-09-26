@@ -5,6 +5,15 @@ export default function Layout() {
   return (
     <Tabs screenOptions={{ headerShown: false }} initialRouteName="search">
       <Tabs.Screen
+        name="search"
+        options={{
+          title: 'Search',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="search" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="top-user-picks"
         options={{
           title: 'Top User Picks',
@@ -13,17 +22,7 @@ export default function Layout() {
           ),
         }}
       />
-      <Tabs.Screen
-    name="search"
-    options={{
-      title: 'Search',
-      tabBarIcon: ({ color, size }) => (
-        <Ionicons name="search" color={color} size={size} />
-      ),
-    }}
-  />
-</Tabs>
-    
-    
+    </Tabs>
+
   );
 }

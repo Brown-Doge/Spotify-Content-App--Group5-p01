@@ -26,7 +26,7 @@ export default function Trending() {
       try {
         const res = await fetch(`https://api.themoviedb.org/3/trending/movie/${time_window}?api_key=${apiKey}`);
         const data = await res.json();
-        const items: TmdbMovie[] = Array.isArray(data?.results) ? data.results.slice(0, 10) : [];
+        const items: TmdbMovie[] = Array.isArray(data?.results) ? data.results.slice(0, 15) : [];
         if (time_window === 'day') {
           setTrendingDay(items);
         } else {
