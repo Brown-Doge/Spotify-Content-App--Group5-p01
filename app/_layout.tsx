@@ -53,6 +53,7 @@ export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen name="(public)" options={{ headerShown: false }} />
+      <Stack.Screen name="(users)" options={{ headerShown: false }} />
     </Stack>
   );
 }

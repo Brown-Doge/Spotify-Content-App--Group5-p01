@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { setFavorite } from '../db/favorites';
 
 type TmdbMovie = {
   id: number;
@@ -18,6 +19,7 @@ export default function Trending() {
   const [selectedMovie, setSelectedMovie] = useState<TmdbMovie | null>(null);
   const [selectedRuntime, setSelectedRuntime] = useState<number | null>(null);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [isFav, setIsFav] = useState(false);
 
   const apiKey = process.env.EXPO_PUBLIC_TMDB_API_KEY ?? '';
 
@@ -26,7 +28,7 @@ export default function Trending() {
       try {
         const res = await fetch(`https://api.themoviedb.org/3/trending/movie/${time_window}?api_key=${apiKey}`);
         const data = await res.json();
-        const items: TmdbMovie[] = Array.isArray(data?.results) ? data.results.slice(0, 10) : [];
+        const items: TmdbMovie[] = Array.isArray(data?.results) ? data.results.slice(0, 15) : [];
         if (time_window === 'day') {
           setTrendingDay(items);
         } else {
@@ -69,6 +71,7 @@ export default function Trending() {
           setModalVisible(true);
           setSelectedRuntime(null);
           setSelectedGenres([]);
+          setIsFav(false);
           loadMovieDetails(item.id);
         }}
       >
@@ -145,6 +148,21 @@ export default function Trending() {
                 <Text style={styles.modalOverview}>
                   {selectedMovie.overview || 'No overview available.'}
                 </Text>
+
+                <View style={{ height: 8 }} />
+                <TouchableOpacity
+                  onPress={async function () {
+                    if (!selectedMovie) return;
+                    await setFavorite(
+                      { movie_id: selectedMovie.id, title: selectedMovie.title, poster_path: selectedMovie.poster_path ?? null },
+                      !isFav
+                    );
+                    setIsFav(!isFav);
+                  }}
+                  style={styles.favButton}
+                >
+                  <Text style={styles.favButtonText}>{isFav ? 'Remove Favorite' : 'Add to Favorites ★'}</Text>
+                </TouchableOpacity>
 
                 <View style={{ height: 8 }} />
                 <TouchableOpacity onPress={function () { setModalVisible(false); }} style={styles.closeButton}>
