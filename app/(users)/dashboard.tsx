@@ -1,10 +1,48 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { getCurrentUserId } from '../db/auth';
+import { getUserById, PublicUserRow } from '../db/queries';
 
 export default function Dashboard() {
+
+  const router = useRouter();
+  const [userId, setUserId] = React.useState<PublicUserRow | null>(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      const userId =  await getCurrentUserId();
+      if (userId) {
+        try {
+          const userData = await getUserById(userId);
+          setUserId(userData);
+        }
+        catch (error) {
+          console.error('Error fetching user data:', error);
+          alert('Error fetching user data. Please try again.');
+          router.replace('/(public)/login'); 
+      }
+      finally {
+      setLoading(false);
+        
+      }
+      }
+    };
+    fetchUser();
+  }, []);
+  
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Welcome back, John!</Text>
+      <Text style={styles.title}> Welcome Back {userId?.first_name}</Text>
 
       <View style={styles.cardRow}>
         <View style={styles.card}>

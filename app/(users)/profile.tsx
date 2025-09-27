@@ -1,22 +1,52 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, Image, StyleSheet, Button } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { getCurrentUserId } from '../db/auth';
+import { getUserById, PublicUserRow } from '../db/queries';
 
 export default function ProfilePage() {
-  const user = {
-    name: 'John Doe',
-    email: 'johndoe@email.com',
-    avatar: 'https://i.pravatar.cc/150?img=3',
-  };
+  const [user, setUser] = React.useState<PublicUserRow | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const router = useRouter();
+  
+
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      const userId =  await getCurrentUserId();
+      if (userId) {
+        try {
+          const userData = await getUserById(userId);
+          setUser(userData);
+        }
+        catch (error) {
+          console.error('Error fetching user data:', error);
+          alert('Error fetching user data. Please try again.');
+          router.replace('/(public)/login'); 
+      } finally {     
+      setLoading(false);
+        }
+      }
+    };
+    fetchUser();
+  }, []);
+
 
   const handleLogout = () => {
     console.log('User logged out');
   };
 
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      <Image source={{ uri: user.avatar }} style={styles.avatar} />
-      <Text style={styles.name}>{user.name}</Text>
-      <Text style={styles.email}>{user.email}</Text>
+      <Text style={styles.name}>{user?.first_name} {user?.last_name}</Text>
+      <Text style={styles.email}>{user?.email}</Text>
       <Button title="Logout" onPress={handleLogout} />
     </View>
   );

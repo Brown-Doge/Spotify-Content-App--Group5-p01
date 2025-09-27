@@ -31,6 +31,17 @@ export default function Layout() {
           ),
         }}
       />
+      <Tabs.Screen
+    name="signup"
+    options={{
+      title: 'Sign Up',
+      tabBarIcon: ({ color, size }) => (
+        <Ionicons name="person-add" color={color} size={size} />
+      ),
+    }}  
+  />
+
     </Tabs>
+
   );
 }
