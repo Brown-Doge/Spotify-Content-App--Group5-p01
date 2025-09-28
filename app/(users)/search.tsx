@@ -114,10 +114,10 @@ return (
               <TouchableOpacity
                 onPress={async () => {
                   setSelectedMovie(item);
-                  setSelectedMovie(item);
                   setModalVisible(true);
+                  //reset state
+                  setIsFav(false); 
                   loadMovieDetails(item.id);
-                  setModalVisible(true);
 
                   //saves clicked movie to db and shows up in history tab
                   try{
@@ -167,6 +167,8 @@ return (
     setSelectedRuntime(null);
     setSelectedGenres([]);
     setSelectedReviews([]);
+    // this way it resets once modal closes 
+    setIsFav(false);
   }}
 >
   <View style={styles.modalBackdrop}>
@@ -222,7 +224,10 @@ return (
 
 
           <View style={{ height: 8 }} />
-          <Button title="Close" onPress={() => setModalVisible(false)} />
+          <Button title="Close" onPress={() => {
+            setModalVisible(false);
+            setIsFav(false);
+          }} />
         </>
       )}
     </View>
