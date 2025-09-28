@@ -81,6 +81,16 @@ export async function initializeDatabase() {
                 FOREIGN KEY (genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE,
                 PRIMARY KEY (user_id, genre_id)
             );
+            --history table to track watched movies with timestamps
+            CREATE TABLE IF NOT EXISTS history (
+                history_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                movie_id INTEGER NOT NULL,
+                title TEXT NOT NULL,
+                watched_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+                FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
+            );
         `);
 
         console.log("Database initialized successfully.");
