@@ -3,7 +3,8 @@ import { Alert, Button, FlatList, Image, Modal, Platform, StyleSheet, Text, Text
 // Update the import path below if the actual path is different
 import { getCurrentUserId } from "../db/auth";
 import { setFavorite } from "../db/favorites";
-
+import { addUserHistory } from "../db/history";
+import { inserMovie } from "../db/movies";
 
 export default function Search() {
 
@@ -73,11 +74,35 @@ return (
             return (
               // When user touches on movie we set the Modal Visibility to true which shows a little overview of the movie
               <TouchableOpacity
-                onPress={() => {
+                onPress={async () => {
                   setSelectedMovie(item);
                   setModalVisible(true);
+
+                  //saves clicked movie to db and shows up in history tab
+                  try{
+                    const userId = await getCurrentUserId(); 
+                    if(!userId){
+                      showLoginAlert();
+                      return;
+                    }
+                    await inserMovie({
+                      movie_id: item.id,
+                      title: item.title,
+                      overview: item.overview ?? null,
+                    });
+                   await addUserHistory(userId, item.id);
+                  console.log("Movie added to history");
+                  }catch(error){
+                    console.error("Error adding movie to history:", error);
+                    showLoginAlert();
+                    return;
+                  }
+
                 }}
               >
+                <View style={styles.movieRow}>
+                  <Text style={styles.item}>{item.title}</Text> 
+                </View>
                 
                 <View style={styles.movieRow}>
                   {posterUrl ? (
