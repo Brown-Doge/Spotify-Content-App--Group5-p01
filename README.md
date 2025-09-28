@@ -21,9 +21,9 @@ The user is able to sign up/login. Once logged in, he is able to search a movie,
 [pull requests](https://github.com/Brown-Doge/Spotify-Content-App--Group5-p01/issues?q=state%3Aclosed%20is%3Apr%20author%3A%40me)
 [my issues](https://github.com/Brown-Doge/Spotify-Content-App--Group5-p01/issues?q=state%3Aclosed%20is%3Aissue%20author%3A%40me%20assignee%3AItsPJ08)
 
--The biggest challenge was making sure everything was connected properly. Connecting our API to our app and connecting the favorites tab to each user ID was a bit challenging because I wanted to make sure it properly worked with everything else as well.
--The most interesting part of the project in my opinion was playing around with the API once I got it connected. I didn't realize how many calls we could make within this API and how much information we can display too. 
--The most valuable thing I learned was how much you should be organized and stay on top of things to efficiently complete this project, I believe we did a good job at that as well.
+- The biggest challenge was making sure everything was connected properly. Connecting our API to our app and connecting the favorites tab to each user ID was a bit challenging because I wanted to make sure it properly worked with everything else as well.
+- The most interesting part of the project in my opinion was playing around with the API once I got it connected. I didn't realize how many calls we could make within this API and how much information we can display too. 
+- The most valuable thing I learned was how much you should be organized and stay on top of things to efficiently complete this project, I believe we did a good job at that as well.
 
 ## Communication
 Majority of our communication was through Slack, if a major problem occurred we would discuss it in class and resolve it. Andrew focused on making sure communication was smooth. This included things like connecting our GitHub PR requests through Slack and also creating a voting system on issue stories to see how difficult/important the issue was. We each completed 4 issues each. The goal was to make around 16 stories at first, while doing the project, more issues would arise, which would then be solved by one of us.
