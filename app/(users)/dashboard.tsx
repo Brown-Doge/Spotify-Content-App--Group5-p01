@@ -39,6 +39,11 @@ export default function Dashboard() {
       </View>
     );
   }
+   const switchProfile = () => {
+    router.replace("/(users)/profile");
+      
+  
+    };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -66,11 +71,8 @@ export default function Dashboard() {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={switchProfile}>
         <Text style={styles.buttonText}>View Profile</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
     </ScrollView>
   );

@@ -1,50 +1,25 @@
-# Welcome to your Expo app 👋
+# Welcome to our Movie App Group 05
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Team members: Hugo Severino, Prabjot Pannu, Emily Grimaldo, Andrew Brown
 
-## Get started
+## Project Description
+The user is able to sign up/login. Once logged in, he is able to search a movie, look at trending movies right now, favorite a movie and look at his profile/logout tab. Once clicking on a specific movie, the user is able to see a little overview, ratings, runtime and the year it was released inside a Modal.
 
-1. Install dependencies
+## Our Process
+- We first decided on a Spotify App but later on created a Movie app using TMDB's API. 
+- The first week was preparing and brainstorming what we wanted to do with this app. 
+- We created the foundation of our project the second week. Which includes things like login, signup, implementing the API, and setting up the database. 
+- The third week was refining these things, creating the favorites/trending tabs and also making sure everything was connected to each other, which includes the unit testing (db testing, favoriting movie testing, login testing). 
+- Fourth week was to polish our project and tweak anything that needed to be addressed.
 
-   ```bash
-   npm install
-   ```
+## Communication
+Majority of our communication was through slack, if a major problem occured we would discuss in class and resolve it. Andrew focused on making sure communication was smooth, this included things like connecting our GitHub PR requests through Slack and also creating a voting system on issue stories to see how difficult/important the issue was. 
 
-2. Start the app
+## Running the project
+For this project we needed an API key which means to create a TMDB account and copy the API key from the account. We also created a .env file at the root of the project and named the key EXPO_PUBLIC_TMDB_API_KEY = "". To get the key you could create a TMDB account and apply your own key, if you do not want to do that, we can message the Professor or TA our key. Once you have the key all you need to do is run:
 
-   ```bash
-   npx expo start
-   ```
+- ## npm install
+- ## npx expo start
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Conclusion
+Overall. our project was successful in terms of what we had in mind and what we got done. Obviously, if we had more time we would be able to create a much larger version of this app and fully dive deep into the API that we used. 

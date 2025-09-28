@@ -32,6 +32,16 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
+        name="logout"
+        options={{
+          title: 'Logout',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="log-out" color={color} size={size} />
+          ),
+        }}
+      />
+
+       <Tabs.Screen
         name="history"
         options={{
           title: 'History',

@@ -8,11 +8,14 @@ import { inserMovie } from "../db/movies";
 
 export default function Search() {
 
-  
+  const [detailsLoading, setDetailsLoading] = useState(false);
+  const [selectedReviews, setSelectedReviews] = useState<any[]>([]);  
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<any | null>(null);
   const [query, setQuery] = useState("");
   const [isFav, setIsFav] = useState(false);
+  const [selectedRuntime, setSelectedRuntime] = useState<number | null>(null);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   // Getting the API key from the .env file if null set to empty string
   const apiKey = process.env.EXPO_PUBLIC_TMDB_API_KEY ?? "";
 
@@ -36,6 +39,41 @@ export default function Search() {
       }
     } catch (error) {
       console.error("Error fetching movies:", error);
+    }
+  }
+  async function loadMovieDetails(movieId: number) {
+    setDetailsLoading(true);
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US&append_to_response=reviews`
+      );
+      const data = await res.json();
+  
+      const runtime: number | null =
+        typeof data?.runtime === "number" ? data.runtime : null;
+  
+      const genres: string[] = Array.isArray(data?.genres)
+        ? data.genres
+            .map(function (g: any) {
+              return g?.name;
+            })
+            .filter(Boolean)
+        : [];
+  
+      const reviews: any[] = Array.isArray(data?.reviews?.results)
+        ? data.reviews.results
+        : [];
+  
+      setSelectedRuntime(runtime);
+      setSelectedGenres(genres);
+      setSelectedReviews(reviews);
+    } catch (e) {
+      console.error("Error fetching details for movie", movieId, e);
+      setSelectedRuntime(null);
+      setSelectedGenres([]);
+      setSelectedReviews([]);
+    } finally {
+      setDetailsLoading(false);
     }
   }
   // Alerts user if not logged in
@@ -76,6 +114,9 @@ return (
               <TouchableOpacity
                 onPress={async () => {
                   setSelectedMovie(item);
+                  setSelectedMovie(item);
+                  setModalVisible(true);
+                  loadMovieDetails(item.id);
                   setModalVisible(true);
 
                   //saves clicked movie to db and shows up in history tab
@@ -100,9 +141,6 @@ return (
 
                 }}
               >
-                <View style={styles.movieRow}>
-                  <Text style={styles.item}>{item.title}</Text> 
-                </View>
                 
                 <View style={styles.movieRow}>
                   {posterUrl ? (
@@ -124,7 +162,12 @@ return (
   transparent
   visible={modalVisible}
   animationType="fade"
-  onRequestClose={() => setModalVisible(false)}
+  onRequestClose={() => {
+    setModalVisible(false);
+    setSelectedRuntime(null);
+    setSelectedGenres([]);
+    setSelectedReviews([]);
+  }}
 >
   <View style={styles.modalBackdrop}>
     <View style={styles.modalCard}>
@@ -138,6 +181,22 @@ return (
           ) : null}
 
           <Text style={styles.modalTitle}>{selectedMovie.title}</Text>
+           {typeof selectedMovie.vote_average === 'number' && (
+                    <View style={styles.ratingBadge}>
+                     <Text style={styles.ratingText}>
+                    {`★ ${selectedMovie.vote_average.toFixed(1)}`}
+                    {typeof selectedMovie.vote_count === 'number' ? ` (${selectedMovie.vote_count})` : ''}
+                        </Text>
+                      </View>
+                    )}
+          
+              <Text style={styles.subTitle}>
+                  {[
+                  (selectedMovie.release_date ? String(new Date(selectedMovie.release_date).getFullYear()) : '—'),
+                  (typeof selectedRuntime === 'number' ? `${selectedRuntime} min` : null),
+                   (selectedGenres.length ? selectedGenres.join(', ') : null),
+                    ].filter(Boolean).join(' • ')}
+                    </Text>
 
           <Text style={styles.modalOverview}>
             {selectedMovie.overview || "No overview available."}
@@ -224,6 +283,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 16,
     textAlign: "center",
+  },
+  ratingBadge: {
+    alignSelf: 'center',
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 9999,
+    marginBottom: 6,
+  },
+  subTitle: {
+    fontSize: 14,
+    color: '#4b5563',
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  ratingText: {
+    color: '#4b5563',
+    fontWeight: '600',
+    fontSize: 12,
   },
 
 });

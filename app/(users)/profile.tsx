@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { getCurrentUserId } from '../db/auth';
+import { getCurrentUserId, logoutUser } from '../db/auth';
 import { getUserById, PublicUserRow } from '../db/queries';
 
 export default function ProfilePage() {
@@ -32,7 +32,10 @@ export default function ProfilePage() {
 
 
   const handleLogout = () => {
+     logoutUser();
+    router.replace("/login"); 
     console.log('User logged out');
+
   };
 
   if (loading) {
