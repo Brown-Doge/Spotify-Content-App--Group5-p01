@@ -94,7 +94,7 @@ export async function initializeDatabase() {
         `);
 
         console.log("Database initialized successfully.");
-        db = openedDb; // Assign the opened database to our module-level variable.
+        db = openedDb;
         return db;
     } catch (error) {
         console.error("Database initialization error:", error);

@@ -65,20 +65,20 @@ Andrew worked on user backend functionality such as user routes and GitHub login
 - [Issues](https://github.com/Brown-Doge/Spotify-Content-App--Group5-p01/issues?q=is%3Aissue+state%3Aclosed+assignee%3Ahugo-severino04)  
 
 #### What was your role / which stories did you work on  
-*(insert here)*  
+Hugo established the local database set up by creating all the tables that would be needed and also creating helper functions that we would use throught the project to make stuff easier for everyone else.
 
 + What was the biggest challenge?  
-  + *(insert here)*  
+  + Making sure the database was working correctly 
 + Why was it a challenge?  
-  + *(insert here)*  
+  + When first getting it started it seemed like after getting one thing with the database it would break 
 + How was the challenge addressed?  
-  + *(insert here)*  
+  + By trial and error, Different things were done to try and make it work without breaking that way the whole project would run soomthly  
 + Favorite / most interesting part of this project  
-  + *(insert here)*  
+  + Seeing the local database actully work and seeing the final result of everything coming together. 
 + If you could do it over, what would you change?  
-  + *(insert here)*  
+  + Better time management as there was still one more feature that would have been good time have but didn't have the time for it.
 + What is the most valuable thing you learned?  
-  + *(insert here)*  
+  + How important it was for the whole team to communicate well so that we can stay on top of the project to make sure it was completed on time.
 
 ---
 
