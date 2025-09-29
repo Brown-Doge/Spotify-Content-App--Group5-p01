@@ -88,20 +88,20 @@ Hugo established the local database set up by creating all the tables that would
 - [Issues](https://github.com/Brown-Doge/Spotify-Content-App--Group5-p01/issues?q=is%3Aissue+state%3Aclosed+assignee%3Aemilygrimaldo)  
 
 #### What was your role / which stories did you work on  
-*(insert here)*  
+Emily was in charge on getting the sign up page to register users to the database so users were able to log in to the application. She also worked on setting up a history page for whenever users clicked on a specific movie.
 
 + What was the biggest challenge?  
-  + *(insert here)*  
+  + The biggest challenge here was getting the history page working as it took a lot of steps in order for it to work as intended  
 + Why was it a challenge?  
-  + *(insert here)*  
+  + There were some issues with the history database that had to be solved in detail
 + How was the challenge addressed?  
-  + *(insert here)*  
+  + I spent time on the challenge and focused my attention on it in order to get it working well.
 + Favorite / most interesting part of this project  
-  + *(insert here)*  
+  + I would say my favorite part of this project that I particpated in was the history page since its a unique and different element to the app.
 + If you could do it over, what would you change?  
-  + *(insert here)*  
+  + I would make sure to spent more time on this project since I was not able to due to being sick during it. 
 + What is the most valuable thing you learned?  
-  + *(insert here)*  
+  + The most valuable thing I learned when working on this project is that its okay if it takes a while to fix your issue as long as you get it done and working in the end.
 
 ---
 
